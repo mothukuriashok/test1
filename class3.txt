@@ -1,0 +1,15 @@
+kubeadm reset
+cd /etc/kubernetes/
+ 11
+rm -rf *
+
+curl ,get svc ngunx,kubectl delete svc nginx
+
+vi tomcat09.yaml
+kubectl create deployment tomcat09 --image=tomcat
+kubectl get deployments
+kubectl create service nodeport tomcat09 --tcp=8080:8080
+kubectl get svc
+kubectl delete deployment tomcat09 
+kubectl delete svc tomcat09
+kubectl describe svc tomcat09
