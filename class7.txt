@@ -40,3 +40,5 @@ set will cleanup the podst created.
 ---->running acluster storage deamon such as glusterd,ooph,on each node;
 ----> running alogs collection deamon in every node,such as fluanted or logistic
 ---->running a node demonetering deamon on every node such as premothery node.
+
+this is for test purpose
