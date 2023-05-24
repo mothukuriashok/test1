@@ -1,0 +1,57 @@
+HELM:kubernetes packager:
+=============================
+deploying app to kubernetis- the powerful and popular container-orchastration system-ca be complex.
+Setting up asing eapp can involve creating multiple indipendent kubernetes resources-
+such as pods,services,depoymwnts,and replicas,-each requiring you ti write a detailed YALM manifest files.
+Helm is a package manger fir kubernets that allows developper and operator to more easily packages,
+configure and deploy applicatioons and services on to kubernetes cluster.
+Helm is now an official kubenrnes project and is aprt of cloudnative computing fundation
+
+,a non-profit that supportsopen source projects in and around kuberetes ecosystem.
+
+CHARTS:-
+============
+helm package are called charts,and they consists of a new YAML.conf and sme templates thar are renderd into kubrntes manifest files.here the 
+basic directory structure of a chart.(creation of chart:helm create <name>)
+ package-name/
+ charts/
+templates/
+chart.yaml
+LICENCE
+README.md
+requiremnets.yaml
+values.yaml
+
+HELM COMMANDS:---
+==================
+1)helm install --name hello-world./hello-world
+2)NAME: hello-world
+3)LAST DEPLOYED: ....
+4)NAME SPACE: DEFAULT
+5)STATUS:DEPLOYED
+6.helm ls-all
+7.helm upgrade
+
+HELM ROLLBACH:-
+================
+it can allways happen that a release went wrong and needs t be tken back.This is thw command to rollvback a release previous
+===>helm rollback hello-world
+HELM DELETE:==
+=============
+ Although les slikely ,we may delete a release completly.We can use command to delte a relese from kubernestes.
+1.helm delte --purge hello-world
+2.release "hello-world" deleted
+there are only some of the commands to work with charts and release in   helm.
+HELM PACKAGE:
+==============
+first we have to package the charts that we have created to be able to 
+myngnx==>cd templates/
+ls
+deploymnats.yaml helpers.yaml ..
+
+
+git cone https:-----
+yum install 
+
+helm repo add bitnami https://charts.bitnami.com/bitnami
+

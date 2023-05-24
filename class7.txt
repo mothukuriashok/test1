@@ -1,0 +1,42 @@
+kubectl create namespace quota-mem-cpu-example
+vi resourcesquota.yaml
+ apiVersion: v1
+kind: ResourceQuota
+matadata:
+  name: mem-cpu-demo
+spec:
+ hard:
+   requests.cpu:"1"
+   requests.ememory:1Gi
+   limits.cpu:"2"
+   limits.memory: 2Gi
+kubectl create -f yaml --namespace=quota-mem-cpu-example
+
+vi fpod.yaml
+apiVersion: v1
+kind:pod
+metadata:
+  name: quota-meme-cpu-demo-2
+spec:
+  containers:
+  - name: quota-mem-cpu-demo-2-ctr
+  image:redis
+   resources:
+   limits
+    memory: "1Gi"
+    cpu:"800m"
+   requests:
+   memory: "700mi"
+   cpu: "400m"
+
+1.creating a namespace and allocating 
+to resourcequota to that namespace
+==============================================
+  TOPIC:2==> Deamonset:
+A deamonsets ensures that all (or some0 Nodes run a copy of a pod.As nodes are added to the cluster,pods are
+added to them.As nodes are removed from the cluster ,those pods are garbage collected.deleting a deamon 
+set will cleanup the podst created.
+   some typical uses of deamon sets:
+---->running acluster storage deamon such as glusterd,ooph,on each node;
+----> running alogs collection deamon in every node,such as fluanted or logistic
+---->running a node demonetering deamon on every node such as premothery node.

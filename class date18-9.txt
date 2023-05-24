@@ -1,0 +1,25 @@
+  406  git --version
+  407  cd git
+  408  mkdir git1
+  409  cd git1
+  410  git init
+  411  vi git1read.txt
+  412  vi git2read.txt
+  413  vi git3read.txt
+  414  git status
+  415*
+  416  git status
+  417  git add git2read.txt
+  418  git add git3read.txt
+  419  git status
+  420  git commit -m"adding files"
+  421  git status
+  422  git remote add origin https://github.com/mothukuriashok/git1.git
+  423  git push -u origin master
+  424  git
+  425  git branch
+  426  git checkout aso
+  427  git branch ashok
+  428  git checkout ashok
+  429  git branch
+  430  history

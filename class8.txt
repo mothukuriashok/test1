@@ -1,0 +1,187 @@
+service docker kubelet       
+swappoff -a
+service firewalld stop
+kubeadm reset
+rm -rf /etc/kubenrnetes
+token add
+----------------------
+service kubelet start
+
+TOPIC:1 ==> headless service:
+================
+sometimes you dont need load ba;encig and a single service ip,
+in this case you can create what are termed "headless"
+service,by explicity specifying "none" for the cluster ip(.spec.clusterip)
+-->you can use a headless serive to intarract with other service discovery mechanism,
+with out being tied to kubernnes implimentatio;
+---> for a headless ip,a cluster ip is not allocated,kube-proxy does not handle these services,and 
+ther is no load balencing or prxy done by the
+platform for them.How DNS is automatically configured depends on weather the service has selectors defined.
+  
+
+TOPIC:2==> Persistant volume:
+====================
+it is piece of storage in cluster that has been provisioned by 
+administartor or dym=namically provisioned using storage classes.It is aresuorce in thr cluster 
+just like a node is a cluster resource.PV rae volume plugins like
+ vilumes,but have a lifecycle indipendent of any individual pod uses the pv.this ap objects 
+captures the deatils of the implimented of storagebut that NFS.iscsi,o r a cloud-provider-specific storage syatem.
+
+TOPIC:3==>  persistant volume claim:(pvc)
+==============================
+Is  areq for staorage by a user .t is simi;er to pod ,pods cinsume nde resources
+ and pvc consume pv eresource .pods can req specific lev3l of reource(cou and memory)
+cliam can req specific size and access modes(eg..,c==can be moved and can be read/write or many times read only).
+
+TOPIC:4==>Dynamic PVC:
+===============
+when none of the static pv's the adminstrator cretaed a user's persistant volume claim,the cluster
+ may try to dynamically provision a volume specially for the pvc,this provisioning is based on storege classes:
+the pvc must req a storage classand the administrator must have crerated and configured that class inn order for dynamic provision.
+
+TOPIC:5==> StatefullSets:
+Statefull set(stable-GA in k8s v1.9) is a kubernetes resource used to mang stateful applications.
+It manages the deploymnent and scaling of a set of pods,and provides gurentee about yhe uniquess of these pods.
+
+satefulset is also a controller but unlike deployments,it doesnt creat replicaset rether iself creates the pod with a unique
+
+
+apiVersion: apps/v1
+kind: Statefulset
+metadata:
+  name:web
+spec:
+  serviceName: "nginx"
+  replicas: 2
+
+   spec:
+	containers:
+       - name:nginx
+	image: k8s.gcr.io/nginx-slim:0.8
+	ports:
+	-containerPort: 80
+	name: web
+	volumeMounts:
+	-name: www
+	mountPath: /user/share/nginx/html
+   volumeClaimTemplates:
+    - metadta:
+	name: www
+      spec:
+	accessModes:  ["ReadWriteOnce"]
+	 resources:
+	  requests:
+	  storage: 1Gi
+
+as mentined in the statefulset concept,the pods in a statefulset have a sticky,unique identity.this identity is based on a 
+unique ordinal index that is assined to each pos by the statefulset controller, the pods names take the for, <statefulsetname>-<ordinal index>.
+since the web staefulset has two rep,icas,it creates two pods, web-0 and web-1.
+
+The pods ordinals,hostnames,srv and a record names have to not changed,but the IP address associated with the pods may have changed.In the cluster used for this 
+tutprial.they have.This is why it is imp nit to config other applications to connect to pods i astatesulset by IP address.
+kubectl scale to scale the number of replicas to 5:
+
+kubectl scale sts web --replicas=5
+statefulset.apps/web scaled
+kubectl patch to scale the statefulset back dwn to three replicas.
+
+kubectl patch sts web -p '{"spec":{"replicas":3}}'
+statefulset.apps/web patched
+
+TOPIC:6==> Secrets:
+===========
+Kubernetes secret objects let you store and manage sensitive information, such
+as passwords, OAuth tokens, and ssh keys. Putting this information in a secret is
+safer and more flexible than putting it verbatim in a Pod definition or in a container
+image.
+
+ Secret is an object that contains a small amount of sensitive data such as a
+password, a token, or a key. Such information might otherwise be put in a Pod
+specification or in an image; putting it in a Secret object allows for more control
+over how it is used, and reduces the risk of accidental exposure.
+Users can create secrets, and the system also creates some secrets.
+
+apiVersion: v1
+kind: Secret
+metadata:
+name: mysecret
+type: Opaque
+data:
+username: YWRtaW4=
+password: MWYyZDFlMmU2N2Rm
+
+TOPIC:7==> CONFIGMAPS:
+==========================
+Many applications require configuration via some combination of config files, command line
+arguments, and environment variables. These configuration artifacts should be decoupled
+from image content in order to keep containerized applications portable. The ConfigMap API
+resource provides mechanisms to inject containers with configuration data while keeping
+containers agnostic of Kubernetes.
+The ConfigMap API resource holds key-value pairs of configuration data that can be
+consumed in pods or used to store configuration data for system components such as
+controllers. ConfigMap is similar to Secrets, but designed to more conveniently support
+working with strings that do not contain sensitive information.
+
+kind:
+ConfigMap
+apiVersion: v1
+metadata:
+name: example-configmap
+data:
+# Configuration values can be set as key-value properties
+database: mongodb
+database_uri: mongodb://localhost:27017
+
+# Or set as complete file contents (even JSON!)
+keys: |
+image.public.key=771
+rsa.public.key=42
+
+kind: Pod
+apiVersion: v1
+metadata:
+name: pod-env-var
+spec:
+containers:
+- name: env-var-configmap
+image: nginx:1.7.9
+envFrom:
+- configMapRef:
+name: example-configmap
+
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+   Once we create the config maps qwe need to map them with the specifications
+Another config map:
+apiVersion: v1
+kind: ConfigMap
+metadata:
+name: special-config
+namespace: default
+data:
+special.how: very
+special.type: charm
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

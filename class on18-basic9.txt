@@ -1,0 +1,45 @@
+:--A fork is a copy of repository.forking allows you to freely experiment with changes without the origina project.
+  opened,you can discuss and review the potentislMost commenly frorks are used to either pi=urpose changes to some one else prj ot ro use someone else prj as a starting point for your own idea.
+
+properties changes to someones else prj:
+============================================
+ a great exm of using forks to propose changes is for bug issue fixes.rather than logging an issue for a bug you have found,you can,
+==> fork the repository
+==> make the fix
+==> submit a pull request to the project owners
+if the prj owner likes yur prj they might pul your fux into th eoriginal repository.
+
+About all PULL requests:
+=========================
+pull requests let you tell others about changes you have pushed to a branch in a repository on the git hub.Once a pul request is opned yu can discuss and review the potential changes witch collberates and add fllow -up commits before you changes are merged into the base branch.
+
+after initialing a pull request youwill see a revoew page that shows a high-level overview of the changes between your branch (the compare branch) and the repository base branch.
+other contributire can  overview ypur proposed changes,add ,comments,cintribute,to the pull request discussion, and even add commits to pull the request.
+
+Stating your work:
+=======================
+the git  stash command takes your uncommitted chnages(both the staged and unstaged),saves them away for later use, and then reverts them from your working copy,for ex,
+ popping your stash removes the changes from your stash and reapplies them to your working copy.
+Alternatively,you can reapply the changes to your working copy and keep them in ypur stash woth==> git stash apply
+
+GIT MERGE AND REBASE:-
+============================
+when to rebase and when to merge:-
+ Ifthe foture bracnhc you are getting changes from is shared with yother developpers,rebasing is not recommended, bescause the rebasing process will create inconsistent repositories.for an individuals ,rebasing makes a lot of sense.
+
+If you want to seerge histpry completly same as it happened,ou should use merge.{Merge preserves history where asrebase rewrites it.}
+ rebase is better to stramline a comolex history,you are able to change the commits,squash two or more commmits into one or edit the commit message.
+
+Rebase will present conflicts one commit at atime whereas merge will present them all at once.It is better and much easier to handle the conflicts but it shouln"t forget that reverting a base is more difficult than reverting .
+
+difference between gitclone and gitpull:
+
+1.gitclone means you are making a copy of the repository in your system
+2.gitfork means you are coping the repository to your git hub account
+3.gitpull means you are fetching the least modified repository.
+4.gitpush means you are returning the rwpository after modifing it;
+in lymens terms:
+ 
+git clone is downloading abd git pull is refreshing.
+
+task:{{{maven and gradle goals,maven form file}}}

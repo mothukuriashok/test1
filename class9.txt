@@ -1,0 +1,53 @@
+kubeadm reset              | 
+rm -rf /etc/kubernetes     |
+rm -rf $HOME/.kube         | 
+swapoff -a 
+=============================
+                |
+
+Ingress:-
+=======================
+ingress exposes HTTP an https routes from 
+outside the clusetr to srvice with in the cluster.
+traffic routing is controlled by rules defined on the ingress resurces.
+ An ingress can be configured to give servuces externally reachable URL's lad balence traffic ,terminatesSSL/TLS and other offer 
+name based virtual hosting .An ingress controler  is responsible for fulfilling the ingress usually with a load balencer,though it 
+ay configure you  edge router or additional frontends to help handle the traffic.
+An ingress doesnot expose arbitory ports or protocols.Exposing services other than HTTP and HTTPs to the internet typically uses a 
+service of type Service Type=NodePort or Service Type=LoadBalencer.
+
+Ingress Controller:-
+=======================
+Inorder for the ingress resouces to work the cluster must ahv an ingress controller running.
+Unlike other type of controllers which run as a part of ===kube-controler-manager== binary .Ingress controllers are not started 
+automatically with a cluster.
+Ingress controllers can tachnically be any system capble of reverse proxing,but the most common is nginx,A full example Nginx
+ Ingress contoller  (and LoadBalencer service) is asfollows.Please note that if you are not on a provider that supports LoadBalencer(i.e bar-metal)
+you can create a NodePort service instead and point to your nodes with an alternative solution that fills that role.-a reverse proxy capable of routing
+request to th exposed NodePOrt for the Ingress controller for the each of your nodes.
+
+
+                                    service1    service2
+                                     pod ,       pod
+                                     app         app
+===man===> n+  -----------------------------------
+         ingresscontroller          service3    service4
+                                    pod,app     pod,app
+
+
+ app: webapp3
+spec:
+ - port: 80
+  selector:
+   app:webapp3
+-------------------------
+apiVersion: extension/v1beta
+kind: Ingress
+ name: webapp-ingress
+spec:
+  rules:
+  - host: my.kubernetes.example
+   http:
+    paths:
+     - path: /webapp1.svc
+       backend: 

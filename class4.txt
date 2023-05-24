@@ -1,0 +1,143 @@
+should mak directory when refused to connect:
+==> configure the kubernetes and follow the steps
+docker start $(docker pa -a -q):::
+-----end-----
+Topic: Name Spaces:-
+=====================
+NameSpaces:
+kuberntets supports multiple virtyal clusters backed by the same physical cluster.
+these virtual clusters are called name spaces
+
+Kubernetes starts with three initial name spaces:
+default :the default name space for oblects created by kbntes system.
+kube-system:name space for objects created by kbntes system.
+kube-public:this is created automatically and is readable by all users.
+this is mostly reserved for clustrs usage,in case that some resuorces should be visible
+and readable publicly through out the whole clusster.the public aspect of this name 
+space is only a convenction,not a requirement.
+
+
+PODS:
+=======
+a pod is basic building block of kbrntes- the samallest and the simpliest unit
+int the kbrns obj model that you create or deploy.A Pod represents arunnign process on your cluster.
+A pod encapsulates an appliction container (or in  some cases,multiple containers).strage resources, aunique network ip , 
+and options that govern how the conatoners should run.a pod represents a unit of deploymants.a 
+single instance of an application in kbrnets.which consists ofsingle or multiple containers.
+
+
+service
+---------
+deployment
+-----------
+replica set
+-------------
+pod
+
+REPLICA SET:
+==============
+ Its purpose is to maintain a stable set of replica pods running at any given time.
+as such,it is often used to guarentee the  availability of a specified number of identical pods.
+replica-sets:
+=============
+ a replication controller ensures that a specified number of pods relicas are running at any one time.In other words a 
+a replicationcontroller makes sure that a pod or a homogenious set of pods is allways up and available.
+
+Services:
+==========
+kubernets pods are mortal.They are born and and when they die,they are not resurrected.
+Replicasets in perticular create and destroy pods dynamicaly 
+(eg: when scaling out or in).While each pod gets its own ip addrss,
+even those ip addrss cannot be replied upon to be stable overtime.
+
+CLUSTER IP:
+=============
+A cluster ip service is the defalt kubernets service.It gives you a servoce inside your cluster that 
+other apps inside your cluster can access.there is no external access.
+WHEN WE USE THIS:
+few scenarios you would use kbrntes proxy to access younservc.
+.debugging your services,or connectin to them directly from your laptops or any other extrenals;
+.allowing internal traffic ,displaying internal dash boards,etc.
+bcz this method req u to run kubectl as an athenticated user you shoulld not use this to expose your servce to the
+internet or use it for production services.
+
+NODE PORT:
+===========
+A node port service is the most primitive way to get external traffic directly to your service.Nodeport,as the anme implies,
+opens a specific port on all the nodes(the VM),and any traffic that is sent to this port is foreworded to the service..
+       
+LOAD BALENCER:
+=============
+A load balencer service is the standerd way to expose a service to the internet,onthe GKE this winspin up to a NetworkLoadBalencer,
+that will give you a single IP address that will foreword all your traffic to your service.
+INGRESS CONTROLLERS AND INGRESS RESOURCES
+============================================
+kbrnts supports a high level of abstration called ingress which alows simple host or url based HTTP routing.An ingress is acore concept
+(in beta version)of kbrnts,but is allways implimented by 3rd party proxy.these implimenations are known as ingress controllers.An ingress controller is resoponsible
+for reading the ongress resource info and processing that data accourdngly.dif ingreess cont have exted the speci in diff ways to support 
+additional causes.
+vi deploymenttomcat.yaml
+kubectl get rs
+kubectl get parts
+
+
+
+apiVersion:apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployments
+metadata:
+  name: tomcat-deployment
+spec:
+ selector:
+  matchLabels:
+   app: tomcat
+ replicas: 2 # tells deployment to run 2 pods matching the template
+ template:
+   metadata:
+   labels:
+    app: tomcat
+  spec:
+     containers:
+     - name: tomcat
+       image: tomcat:1.8
+       ports:
+       - containerPort:8080
+apiVerson: v1
+kind: Service
+metadata:
+  name: webapp-svc
+  labels:
+     app: webapp1
+spec:
+  type:Nodeport
+  ports:
+  - port: 8080
+    nodeport:30415
+ selector:
+  app: webapp1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 

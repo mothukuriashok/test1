@@ -1,0 +1,16 @@
+master: api,scheduler,controller,etcd
+node(minions): kubelet,kubeproxy,container
+
+namespace
+pod
+deployment
+rc
+replica set
+stateful set
+pv pvc 
+deamon set
+service--clusterip,nodeport,extrnalname,load balencer
+ingress
+helm,promethos,grahala
+
+minkube,dashboard,dns,resource quota
